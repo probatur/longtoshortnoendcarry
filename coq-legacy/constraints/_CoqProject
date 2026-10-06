@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2026 Next Ridge Solutions Ltd
+-Q . Constraints
+-Q gen Generated
+-Q ../spec ""
+
+gen/lts_model_gen.v
+gen/lts_wires_gen.v
+gen/lts_scaffold_gen.v
+pfcs.v
+range_field.v
+range_field_pasta.v
+field_order_lift.v
+bits_kit.v
+../spec/lts_rule.v
+gen/lts_necessity_gen.v
+lts_semantic.v
+lts_model_facts.v
+lts_soundness.v
+lts_adequacy.v
