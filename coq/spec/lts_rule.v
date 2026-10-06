@@ -11,7 +11,7 @@
 
    Scope: these results bind the formal (Coq) layer only; the generated constraint model's fidelity to the circuit implementation, and the implementation itself, are outside them. *)
 
-From Coq Require Import ZArith List.
+From Stdlib Require Import ZArith List.
 Import ListNotations.
 Open Scope Z_scope.
 
@@ -50,7 +50,7 @@ Definition REL_lts (inp out : list Z) : Prop :=
 Definition adequate (accepts : list Z -> list Z -> Prop) : Prop :=
   forall inp out, PRE_lts inp -> (accepts inp out <-> REL_lts inp out).
 
-From Coq Require Import Lia.
+From Stdlib Require Import Lia.
 
 Lemma N_BITS_val : N_BITS = 64. Proof. reflexivity. Qed.
 Lemma K_val : K = 7%nat. Proof. reflexivity. Qed.

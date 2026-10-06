@@ -37,12 +37,27 @@ cd longtoshortnoendcarry
 docker build .
 ```
 
-The build compiles every proof from source in the public Coq 8.20.1 image, pinned by digest in the Dockerfile,
-then re-checks the whole development, together with the parts of Coq's standard library it uses, with coqchk,
-Coq's independent kernel checker. It fails unless coqchk accepts everything and reports no axioms, and its last
+The build compiles every proof from source in the public Rocq 9.2 image, pinned by digest in the Dockerfile,
+then re-checks the whole development, together with the parts of the Rocq standard library it uses, with rocqchk,
+Rocq's independent kernel checker. It fails unless rocqchk accepts everything and reports no axioms, and its last
 step prints the theorem exactly as the kernel states it, with the two definitions it is stated with (reproduced
 below). With BuildKit, add `--progress=plain` to see every line. The same build runs on every push, from
 `.github/workflows/check.yml`. If you run it, you are welcome to add a line to [REPRODUCTIONS.md](REPRODUCTIONS.md).
+
+## Rocq 9.2 and the Coq legacy version
+
+The proofs now build with Rocq 9.2 (`coq/`, checked by `docker build .`). The Coq 8.20.1 version that was
+published is kept verbatim in `coq-legacy/`, with its own one-command check: `docker build -f Dockerfile.legacy .`
+(it runs `check-legacy.sh` in the same digest-pinned Coq 8.20.1 image as before). Both checks run on every push.
+
+The exact changes from `coq-legacy/` to `coq/` are imports only: `From Coq Require ...` became
+`From Stdlib Require ...`, and in `range_field_pasta.v` `Require Import Coq.Arith.Arith Coq.ZArith.Zpow_facts.`
+became `Require Import Stdlib.Arith.Arith Stdlib.ZArith.Zpow_facts.` No definition, lemma or theorem statement,
+and no proof, was changed.
+
+The statement block below was captured from the Coq 8.20.1 check. Rocq 9.2 prints the same statement, except that
+argument-scope annotations are written with an underscore (`%_function_scope`, `%_list_scope` instead of
+`%function_scope`, `%list_scope`): a change in the printer, not in the theorem.
 
 ## The theorem, as the kernel states it
 
